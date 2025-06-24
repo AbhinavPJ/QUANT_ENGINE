@@ -84,10 +84,14 @@ int main() {
             allocation_row[sym] = alloc;
         }
 
-        for (const string& sym : shorts) {
-            double alloc = short_alloc;
-            day_growth += alloc * (daily_returns[sym] - 1.0);
-            allocation_row[sym] = alloc;
+         for (const string& sym : shorts) {
+            double R = daily_returns[sym];
+            if (R > 0.0) {
+                double alloc = short_alloc;
+                double short_pnl = alloc * (1.0 - 1.0 / R);
+                day_growth += short_pnl;
+                allocation_row[sym] = alloc;
+            }
         }
 
         wealth *= (1.0 + day_growth);

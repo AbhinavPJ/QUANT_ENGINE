@@ -73,7 +73,7 @@ int main() {
                 returns.push_back({ cumulative_return, headers[j] });
             }
         }
-        cout<<returns.size()<<endl;
+        //cout<<returns.size()<<endl;
         if (returns.size() < 10) {
             wealth_history.push_back(wealth);
             allocation_log.push_back({});
