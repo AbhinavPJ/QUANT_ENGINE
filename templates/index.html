@@ -1,27 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <a href="/screener" style="color:#38bdf8;">Go to Stock Screener</a>
     <meta charset="UTF-8">
     <title>Stock Price Viewer</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
-        input[type="text"] { padding: 10px; width: 300px; }
-        input[type="submit"] { padding: 10px 20px; }
-        .error { color: red; }
-        img { margin-top: 30px; max-width: 100%; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #0a192f;
+            color: #dbeafe;
+            text-align: center;
+            margin: 0;
+            padding: 50px;
+        }
+
+        h1 {
+            color: #60a5fa;
+        }
+
+        form {
+            margin-bottom: 30px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #1e40af;
+            background-color: #1e293b;
+            color: #dbeafe;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #2563eb;
+        }
+
+        .error {
+            color: #f87171;
+        }
+
+        img {
+            margin-top: 30px;
+            max-width: 100%;
+            border: 2px solid #1e3a8a;
+        }
+
+        table {
+            margin: 40px auto;
+            width: 90%;
+            border-collapse: collapse;
+            background-color: #1e293b;
+            color: #dbeafe;
+        }
+
+        th, td {
+            border: 1px solid #334155;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #0f172a;
+        }
+
+        a {
+            color: #38bdf8;
+        }
     </style>
 </head>
 <body>
     <h1>Stock Price Viewer</h1>
     <form method="post">
-        <input type="text" name="stock_code" placeholder="Enter stock code (e.g., AAPL)" required>
-        <input type="submit" value="Show Graph">
-    </form>
+    <input type="text" name="stock_code" placeholder="Enter stock codes (e.g., AAPL,GOOG,TSLA)" required>
+    
+    <select name="plot_type" style="margin-left: 10px;">
+        <option value="price" selected>Price</option>
+        <option value="return">Returns</option>
+    </select>
+    
+    <input type="submit" value="Show Graph">
+</form>
+
+
     {% if error %}
         <p class="error">{{ error }}</p>
     {% endif %}
+
     {% if chart %}
         <img src="data:image/png;base64,{{ chart }}" alt="Stock Price Chart">
+    {% endif %}
+
+    {% if stock_info %}
+        <h2>Financial Summary</h2>
+        <table>
+            <thead>
+                <tr>
+                    {% for key in stock_info[0].keys() %}
+                        <th>{{ key }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock in stock_info %}
+                    <tr>
+                        {% for value in stock.values() %}
+                            {% if loop.index0 == 13 %}
+                                <td><a href="{{ value }}" target="_blank">Link</a></td>
+                            {% else %}
+                                <td>{{ value }}</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     {% endif %}
 </body>
 </html>
