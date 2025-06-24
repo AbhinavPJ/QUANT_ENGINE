@@ -1,0 +1,6 @@
+📊 Strategy Metrics:
+Total Return:     -1.28%
+Sharpe Ratio:     -0.2528
+Max Drawdown:     -3.56%
+Mean Daily Return:-0.0010%
+Volatility:       0.0628%
